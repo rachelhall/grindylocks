@@ -1,13 +1,8 @@
 import React from "react";
-import TextInput from "../../styleComponents/TextInput";
-import Button from "../../styleComponents/Button/Button";
+import Button from "../../src/styleComponents/Button";
+import TextInput from "../../src/styleComponents/TextInput";
 
-import "./LoginForm.scss";
-import {
-  FEED_VIEW_ROUTE,
-  SIGNUP_VIEW_ROUTE,
-} from "src/apps/SkateparksApp/skateparksAppRoutes";
-import { Link } from "react-router-dom";
+import styles from "./LoginForm.module.scss";
 
 interface IProps {
   email: string;
@@ -29,7 +24,7 @@ export const LoginForm: React.FC<IProps> = (props) => {
             inputWrapperClass="LoginForm-TextInput"
             labelContent="email, email, or phone number"
             value={email}
-            onChange={(value) => {
+            onChange={(value: string) => {
               setEmail(value);
             }}
           />
@@ -54,12 +49,12 @@ export const LoginForm: React.FC<IProps> = (props) => {
           Log In
         </Button>
         <a className="LoginForm-link">Forgot password?</a>
-        <p className="LoginForm-signUp">
+        {/* <p className="LoginForm-signUp">
           Don't have an account?{" "}
           <Link to={SIGNUP_VIEW_ROUTE} className="LoginForm-link">
             Sign up
           </Link>
-        </p>
+        </p> */}
       </form>
     </div>
   );

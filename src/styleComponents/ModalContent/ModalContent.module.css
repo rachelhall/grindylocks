@@ -1,0 +1,25 @@
+.ModalContent {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  height: 400px;
+  left: 50%;
+  max-height: 80%;
+  max-width: 80%;
+  padding: 1rem;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60rem;
+  z-index: 1010;
+}
+
+.ModalContent-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 1rem;
+}

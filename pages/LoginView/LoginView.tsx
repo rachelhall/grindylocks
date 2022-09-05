@@ -1,10 +1,8 @@
 import LoginForm from "../../components/LoginForm/LoginForm";
 import React, { useEffect, useState } from "react";
-import Text from "../../styleComponents/Text";
 
-import "./LoginView.scss";
-
-
+import styles from "./LoginView.module.scss";
+import { Paragraph } from "../../src/styleComponents/Paragraph";
 
 interface IProps {}
 
@@ -19,16 +17,14 @@ export const LoginView: React.FC<IProps> = (props) => {
 
   const localAPI = `http://127.0.0.1:8000/api/`;
 
-  const navigate = useNavigate();
-
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const isLoggedIn = await login({ email, password });
-    if (isLoggedIn) {
-      navigate(FEED_VIEW_ROUTE);
-    } else {
-      setError("invalid credentials");
-    }
+    // const isLoggedIn = await login({ email, password });
+    // if (isLoggedIn) {
+    //   navigate(FEED_VIEW_ROUTE);
+    // } else {
+    //   setError("invalid credentials");
+    // }
   };
 
   const navigateToFeed = () => {};
@@ -40,9 +36,7 @@ export const LoginView: React.FC<IProps> = (props) => {
   return (
     <div className="LoginView">
       <div className="LoginView-header">
-        <Text className="LoginView-logo" fontSize="large" fontWeight="bold">
-          Skateparks
-        </Text>
+        <Paragraph>Skateparks</Paragraph>
       </div>
       <LoginForm
         email={email}

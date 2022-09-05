@@ -1,0 +1,92 @@
+.Button {
+  position: relative;
+  border: none;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+// Width
+
+.Button-xSmall {
+  width: 5rem;
+  height: 2rem;
+  font-size: 0.8rem;
+}
+
+.Button-small {
+  width: 10rem;
+}
+.Button-medium {
+  width: 15rem;
+}
+.Button-large {
+  width: 20rem;
+}
+
+.Button-full {
+  width: 100%;
+}
+
+.Button-fit {
+  width: fit-content;
+  padding: 0 1rem;
+}
+
+// Border Radius
+
+.Button-radius1 {
+  border-radius: 0.5rem;
+}
+
+.Button-radius2 {
+  border-radius: 1rem;
+}
+
+.Button-radius3 {
+  border-radius: 1.5rem;
+}
+
+.Button-radius-none {
+  border-radius: 0;
+}
+
+// Color
+
+.Button-primary {
+  background-color: rgb(90, 161, 206);
+  color: white;
+}
+
+.Button-secondary {
+  background-color: rgb(90, 206, 109);
+  color: white;
+}
+
+.Button-black {
+  background-color: black;
+  color: white;
+}
+
+.Button-transparent {
+  background-color: transparent;
+  color: black;
+  border: 1px solid black;
+}
+
+// Text Button
+.Button-textButton {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  width: fit-content;
+  height: fit-content;
+  display: inline;
+}
