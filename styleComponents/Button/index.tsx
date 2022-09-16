@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 
-import "./Button.scss";
+import styles from "./Button.module.scss";
 import Link from "next/link";
 
 interface IProps extends React.HTMLProps<HTMLButtonElement> {
@@ -33,7 +33,7 @@ interface IProps extends React.HTMLProps<HTMLButtonElement> {
   type?: "submit" | "reset" | "button";
 }
 
-export const Button: React.FC<IProps> = (props) => {
+const Button: React.FC<IProps> = (props) => {
   const {
     allowClickWhenDisabled,
     ariaLabel,
@@ -70,51 +70,11 @@ export const Button: React.FC<IProps> = (props) => {
     }
   };
 
-  const mainClass = cx(
-    "Button",
-    className,
-    buttonSize === "xSmall"
-      ? "Button-xSmall"
-      : buttonSize === "small"
-      ? "Button-small"
-      : buttonSize === "medium"
-      ? "Button-medium"
-      : buttonSize === "large"
-      ? "Button-large"
-      : buttonSize === "fit"
-      ? "Button-fit"
-      : "Button-full",
-    borderRadius === 1
-      ? "Button-radius1"
-      : borderRadius === 2
-      ? "Button-radius2"
-      : borderRadius === 3
-      ? "Button-radius3"
-      : "Button-radius-none",
-    color === "primary"
-      ? "Button-primary"
-      : color === "secondary"
-      ? "Button-secondary"
-      : color === "black"
-      ? "Button-black"
-      : "Button-transparent",
-    textButton ? "Button-textButton" : undefined,
-    disabled && "Button-disabled"
-  );
-
   if (!!linkTo && !disabled) {
-    return (
-      <Link className={mainClass} href={linkTo}>
-        {children}
-      </Link>
-    );
+    return <Link href={linkTo}>{children}</Link>;
   }
 
-  return (
-    <button onClick={handleOnClick} className={mainClass}>
-      {children}
-    </button>
-  );
+  return <button onClick={handleOnClick}>{children}</button>;
 };
 
 export default Button;
