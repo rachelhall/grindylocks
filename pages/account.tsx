@@ -4,12 +4,11 @@ import { IAccount } from "lib/types/account";
 import { IUser } from "lib/types/user";
 import { NextPage } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 
 const Account: NextPage = () => {
   const [account, setAccount] = useState<IAccount>();
   const [user, setUser] = useState<IUser>();
-
-  useEffect(() => console.log(user), [user]);
 
   useEffect(() => {
     axios("api/user").then((res) => setUser(res.data));
@@ -19,19 +18,15 @@ const Account: NextPage = () => {
     const { data } = await axios.get(`${window.location.origin}/api/account`, {
       data: { user: user },
     });
+
     setAccount(data);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (user) {
       getAccount();
     }
-  }, [user]);
-
-  const accountDetails = useMemo(
-    () => ({ name: account?.name, avatar: account?.avatar, bio: account?.bio }),
-    [account]
-  );
+  }, [getAccount, user]);
 
   if (!account) {
     return <p>Loading...</p>;
@@ -40,7 +35,15 @@ const Account: NextPage = () => {
   return (
     <div>
       <p>Account page</p>
-      <p>{accountDetails.name}</p>
+      <Image
+        alt={`picture of ${name}`}
+        src={account.avatar}
+        height="100"
+        width="100"
+      />
+      <p>{account.name}</p>
+      <p>{account.bio}</p>
+      <p>{account.pronouns}</p>
     </div>
   );
 };

@@ -6,11 +6,17 @@ import { NextApiRequest, NextApiResponse } from "next";
 async function account(req: NextApiRequest, res: NextApiResponse) {
   const id = req.session.user?.user_id;
 
-  const accountUrl = `${process.env.API_URL}/account/accounts/?user=${id}`;
+  const accountUrl = id
+    ? `${process.env.API_URL}/account/accounts/?user=${id}`
+    : `${process.env.API_URL}/account/accounts/`;
 
   try {
     const response = await axios.get(accountUrl);
-    res.status(200).json(response.data);
+    if (response.data.length === 1) {
+      res.status(200).json(response.data[0]);
+    } else {
+      res.status(200).json(response.data);
+    }
   } catch (error) {
     res
       .status(500)
