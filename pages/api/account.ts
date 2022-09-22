@@ -1,0 +1,21 @@
+import axios from "axios";
+import { withIronSessionApiRoute } from "iron-session/next";
+import { sessionOptions } from "lib/session";
+import { NextApiRequest, NextApiResponse } from "next";
+
+async function account(req: NextApiRequest, res: NextApiResponse) {
+  const id = req.session.user?.user_id;
+
+  const accountUrl = `${process.env.API_URL}/account/accounts/?user=${id}`;
+
+  try {
+    const response = await axios.get(accountUrl);
+    res.status(200).json(response.data);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ error, message: "Sorry, something's not quite right." });
+  }
+}
+
+export default withIronSessionApiRoute(account, sessionOptions);

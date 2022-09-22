@@ -689,6 +689,13 @@
   dependencies:
     "color-convert" "^2.0.1"
 
+"apisauce@^2.1.6":
+  "integrity" "sha512-MdxR391op/FucS2YQRfB/NMRyCnHEPDd4h17LRIuVYi0BpGmMhpxc0shbOpfs5ahABuBEffNCGal5EcsydbBWg=="
+  "resolved" "https://registry.npmjs.org/apisauce/-/apisauce-2.1.6.tgz"
+  "version" "2.1.6"
+  dependencies:
+    "axios" "^0.21.4"
+
 "argparse@^2.0.1":
   "integrity" "sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q=="
   "resolved" "https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz"
@@ -761,6 +768,13 @@
   "integrity" "sha512-32+ub6kkdhhWick/UjvEwRchgoetXqTK14INLqbGm5U2TzBkBNF3nQtLYm8ovxSkQWArjEQvftCKryjZaATu3w=="
   "resolved" "https://registry.npmjs.org/axe-core/-/axe-core-4.4.3.tgz"
   "version" "4.4.3"
+
+"axios@^0.21.4":
+  "integrity" "sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz"
+  "version" "0.21.4"
+  dependencies:
+    "follow-redirects" "^1.14.0"
 
 "axios@^0.27.2":
   "integrity" "sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ=="
@@ -1347,7 +1361,7 @@
   "resolved" "https://registry.npmjs.org/flatted/-/flatted-3.2.6.tgz"
   "version" "3.2.6"
 
-"follow-redirects@^1.14.9":
+"follow-redirects@^1.14.0", "follow-redirects@^1.14.9":
   "integrity" "sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA=="
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.1.tgz"
   "version" "1.15.1"
