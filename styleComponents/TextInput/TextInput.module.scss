@@ -1,35 +1,27 @@
+.textInput {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .textInputField {
   display: flex;
-  // background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--light);
   height: 3.5rem;
   border-radius: 0.5rem;
   padding: 1.3rem 0.8rem;
   font-size: 1rem;
-  border: 1px solid gray;
+  border: 1px solid var(--dark);
+  margin: 0.25rem 0;
   &:focus {
-    outline: 1px solid black;
+    outline: 1px solid var(--accent);
+    border: 1px solid var(--accent);
   }
   width: 100%;
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
 }
 
-.TextInput-labelContent {
-  position: absolute;
-  left: 10px;
-  top: 35%;
-  color: gray;
+.label {
+  color: var(--black);
   transition: 200ms ease-in;
-}
-
-.textInputField:focus ~ .TextInput-labelContent,
-.textInputField:not(:placeholder-shown).textInputField:not(:focus)
-  ~ .TextInput-labelContent {
-  top: 0.3rem;
-  font-size: 12px;
-}
-
-.textInputField::placeholder {
-  margin-top: 50rem;
+  margin: 0.25rem 0;
 }

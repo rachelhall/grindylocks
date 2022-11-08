@@ -1,15 +1,11 @@
-import LoginForm from "../components/LoginForm";
 import { NextPage } from "next";
-import { FormEvent, useState } from "react";
+
+import LoginForm from "../components/LoginForm";
+import { Text } from "../styleComponents";
 
 const Login: NextPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = () => {};
   return (
     <div>
-      <p>login form</p>
       <LoginForm />
     </div>
   );

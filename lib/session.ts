@@ -6,6 +6,7 @@ import {
   GetServerSidePropsResult,
   NextApiHandler,
 } from "next";
+
 import { IUser } from "./types/user";
 
 export const sessionOptions: IronSessionOptions = {

@@ -1,0 +1,14 @@
+.account {
+}
+
+.postGrid {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
+  grid-gap: 2rem;
+}
+
+.gridContainer {
+  display: flex;
+  justify-content: center;
+}

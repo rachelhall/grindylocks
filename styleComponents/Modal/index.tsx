@@ -1,47 +1,30 @@
-import cx from 'classnames';
-import React, { useEffect, useImperativeHandle, useState } from 'react';
-import { useKeyPress } from '@/utils';
-import CloseButton from '../CloseModalButton';
-import styles from './Modal.module.css';
+import React from "react";
+import { ModalContextProvider } from "lib/context/ModalContext";
+import { CloseModalButton } from "styleComponents/CloseModalButton";
 
-type IProps = {
-  content: JSX.Element;
-};
+import styles from "./Modal.module.scss";
 
-export const Modal: React.FC<IProps> = ({ content }, ref) => {
-  const [isOpen, setIsOpen] = useState(false);
+interface IProps {
+  isOpen: boolean;
+  children: JSX.Element;
+}
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      close: () => setIsOpen(false),
-      open: () => setIsOpen(true),
-    }),
-    []
-  );
+export const Modal: React.FC<IProps> = (props) => {
+  const { children, isOpen } = props;
 
-  const escapePressed = useKeyPress('Escape');
+  const closeModal = () => {};
 
-  useEffect(() => {
-    if (isOpen && escapePressed) {
-      setIsOpen(false);
-    }
-  }, [escapePressed, isOpen]);
-
-  const modalClass = cx(styles['modal'], !isOpen && styles['modal-closed']);
+  if (!isOpen) {
+    return null;
+  }
   return (
-    <div className={modalClass}>
-      <div className={styles['ModalContent']}>
-        <CloseButton handleClose={() => setIsOpen(false)} />
-        <div className={styles['ModalContent-inner']}>{content}</div>
+    <ModalContextProvider closeModal={closeModal}>
+      <div className={styles.Modal}>
+        <CloseModalButton handleClose={() => {}} />
+        <div className={styles.modalContent}>{children}</div>
       </div>
-      <div
-        className={styles['modal-overlay']}
-        onClick={() => setIsOpen(false)}
-        onKeyDown={() => setIsOpen(false)}
-        role="button"
-        tabIndex={0}
-      />
-    </div>
+    </ModalContextProvider>
   );
 };
+
+export default Modal;

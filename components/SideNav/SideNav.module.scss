@@ -1,0 +1,17 @@
+.SideNav {
+  background-color: var(--dark);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  height: 100%;
+  padding: 2rem 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 20rem;
+}
+
+.logout {
+  position: absolute;
+  bottom: 0;
+  margin: 1rem 0;
+}

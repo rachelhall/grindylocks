@@ -1,84 +1,77 @@
-.Button {
+.button {
   position: relative;
+  margin: 0.5rem 0;
   border: none;
+  border-radius: 0.5rem;
+  background-color: var(--accent);
+  color: var(--light);
+  text-transform: uppercase;
   height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
   cursor: pointer;
+  transition: all 0.15s;
+  border: 3px solid var(--accent);
+  font-weight: bold;
+  &:focus {
+    outline: 1px solid var(--accent);
+  }
+  &:hover {
+    border: 3px dotted var(--accent);
+    background-color: var(--light);
+    color: var(--accent);
+  }
 }
 
 // Width
 
-.Button-xSmall {
+.xSmall {
   width: 5rem;
   height: 2rem;
   font-size: 0.8rem;
 }
 
-.Button-small {
+.small {
   width: 10rem;
 }
-.Button-medium {
+.medium {
   width: 15rem;
 }
-.Button-large {
+.large {
   width: 20rem;
 }
 
-.Button-full {
+.full {
   width: 100%;
 }
 
-.Button-fit {
+.fit {
   width: fit-content;
   padding: 0 1rem;
 }
 
-// Border Radius
-
-.Button-radius1 {
-  border-radius: 0.5rem;
-}
-
-.Button-radius2 {
-  border-radius: 1rem;
-}
-
-.Button-radius3 {
-  border-radius: 1.5rem;
-}
-
-.Button-radius-none {
-  border-radius: 0;
-}
-
 // Color
 
-.Button-primary {
-  background-color: rgb(90, 161, 206);
-  color: white;
+.primary {
+  background-color: var(--dark);
+  color: var(--light);
 }
 
-.Button-secondary {
-  background-color: rgb(90, 206, 109);
-  color: white;
+.secondary {
+  background-color: var(--accent);
+  color: var(--light);
 }
 
-.Button-black {
-  background-color: black;
-  color: white;
-}
-
-.Button-transparent {
+.transparent {
   background-color: transparent;
-  color: black;
-  border: 1px solid black;
+  color: var(--black);
+  border: 1px solid var(--black);
 }
 
 // Text Button
-.Button-textButton {
+.textButton {
   background-color: transparent;
   color: inherit;
   border: none;

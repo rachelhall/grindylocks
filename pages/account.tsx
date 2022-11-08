@@ -1,23 +1,36 @@
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import useUser from "lib/hooks/useUser";
 import { IAccount } from "lib/types/account";
+import { IPost } from "lib/types/post";
 import { IUser } from "lib/types/user";
 import { NextPage } from "next";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
+
+import { AccountInfoCard } from "components/AccountInfoCard";
+import Post from "components/Post";
+
+import styles from "../styles/pages/Account.module.scss";
 
 const Account: NextPage = () => {
-  const [account, setAccount] = useState<IAccount>();
   const [user, setUser] = useState<IUser>();
+
+  const [account, setAccount] = useState<IAccount>();
+  const [posts, setPosts] = useState<IPost[]>([]);
+
+  useEffect(() => {
+    axios("api/post").then((res) => setPosts(res.data));
+  }, []);
 
   useEffect(() => {
     axios("api/user").then((res) => setUser(res.data));
   }, []);
 
   const getAccount = useCallback(async () => {
-    const { data } = await axios.get(`${window.location.origin}/api/account`, {
-      data: { user: user },
-    });
+    const { data } = await axios.get(
+      `${window.location.origin}/api/currentAccount`,
+      {
+        data: { user: user },
+      }
+    );
 
     setAccount(data);
   }, [user]);
@@ -29,21 +42,27 @@ const Account: NextPage = () => {
   }, [getAccount, user]);
 
   if (!account) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        {/* <Header /> */}
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <p>Account page</p>
-      <Image
-        alt={`picture of ${name}`}
-        src={account.avatar}
-        height="100"
-        width="100"
-      />
-      <p>{account.name}</p>
-      <p>{account.bio}</p>
-      <p>{account.pronouns}</p>
+    <div className={styles.account}>
+      {/* <Header /> */}
+      <AccountInfoCard account={account} />
+      <div className={styles.gridContainer}>
+        <div className={styles.postGrid}>
+          {posts.map((post) => (
+            <div key={post.id}>
+              <Post post={post} />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

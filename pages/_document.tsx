@@ -1,5 +1,5 @@
-import NextDocument, { Html, Head, Main, NextScript } from "next/document";
 import React from "react";
+import NextDocument, { Head, Html, Main, NextScript } from "next/document";
 
 type Props = {};
 
@@ -10,7 +10,7 @@ class Document extends NextDocument<Props> {
         <Head />
         <body>
           <Main />
-          <div id="myportal" />
+          <div id="modal-root" />
           <NextScript />
         </body>
       </Html>

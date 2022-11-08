@@ -1,26 +1,37 @@
 import { useState } from "react";
-import Button from "../../styleComponents/Button";
-import TextInput from "../../styleComponents/TextInput";
-import { useRouter } from "next/router";
-import useUser from "lib/hooks/useUser";
+import { useForm } from "react-hook-form";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import useUser from "lib/hooks/useUser";
+import { useRouter } from "next/router";
+
+import { Button, TextInput } from "../../styleComponents";
+import { Text } from "../../styleComponents/Text";
+
+import styles from "./LoginForm.module.scss";
 
 interface IProps {}
 
 const LoginForm: React.FC<IProps> = () => {
   const router = useRouter();
 
-  const { mutateUser } = useUser({ redirectTo: "/account" });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<any>();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState();
+  const { mutateUser } = useUser();
 
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
     try {
       mutateUser(
         await fetchJson("api/login", {
@@ -29,6 +40,7 @@ const LoginForm: React.FC<IProps> = () => {
           body: JSON.stringify({ email, password }),
         })
       );
+      router.push("/account");
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);
@@ -36,25 +48,23 @@ const LoginForm: React.FC<IProps> = () => {
         console.error("An unexpected error has occurred:", error);
       }
     }
-
-    // router.push({ pathname: "/account", query: data });
   };
 
   return (
-    <div className="LoginForm">
-      <form onSubmit={handleSubmit}>
+    <div className={styles.loginForm}>
+      <Text color="dark">Login here</Text>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           label="email"
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="email"
-          id="email"
-          name="email"
+          required={true}
+          type="text"
+          register={register}
         />
         <TextInput
-          onChange={(e) => setPassword(e.target.value)}
           label="password"
-          placeholder="password"
-          id="password"
+          required={true}
+          type="password"
+          register={register}
         />
         <Button type="submit">Submit</Button>
       </form>

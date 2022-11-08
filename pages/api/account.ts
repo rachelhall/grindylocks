@@ -4,11 +4,7 @@ import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function account(req: NextApiRequest, res: NextApiResponse) {
-  const id = req.session.user?.user_id;
-
-  const accountUrl = id
-    ? `${process.env.API_URL}/account/accounts/?user=${id}`
-    : `${process.env.API_URL}/account/accounts/`;
+  const accountUrl = `${process.env.API_URL}/account/accounts/`;
 
   try {
     const response = await axios.get(accountUrl);

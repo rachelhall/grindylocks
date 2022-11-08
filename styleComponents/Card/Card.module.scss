@@ -1,0 +1,8 @@
+@use "../../styles/mixins" as mixins;
+
+.Card {
+  background: var(--light);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  @include mixins.shadow;
+}

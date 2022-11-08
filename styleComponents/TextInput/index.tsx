@@ -1,49 +1,32 @@
-import React, { InputHTMLAttributes, useState } from "react";
-import cx from "classnames";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import React, { HTMLInputTypeAttribute } from "react";
+import { UseFormRegister } from "react-hook-form";
+import { Path } from "react-hook-form";
 
-import styles from "TextInput.module.scss";
+import styles from "./TextInput.module.scss";
 
-interface IProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IProps {
   className?: string;
-  label: string;
-  type?: string;
-  value?: string;
+  label: Path<any>;
+  required: boolean;
+  type?: HTMLInputTypeAttribute;
   withClear?: boolean;
   withDollarSign?: boolean;
   withPercentSign?: boolean;
+  register?: UseFormRegister<any>;
 }
 
-const TextInput: React.FC<IProps> = ({
-  disabled,
-  label,
-  name,
-  placeholder,
-  type,
-  value,
-  onChange,
-}) => {
-  const [defaultValue, setDefaultValue] = useState(placeholder);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange?.(e);
-  };
-
+export const TextInput: React.FC<IProps> = ({ label, register, required }) => {
   return (
-    <div>
-      {label && <label className="TextInput-labelContent">{label}</label>}
-
-      <input
-        placeholder={defaultValue}
-        disabled={disabled}
-        name={name}
-        onFocus={() => setDefaultValue("")}
-        onBlur={() => setDefaultValue(placeholder)}
-        onChange={handleChange}
-        type={type}
-      />
+    <div className={styles.textInput}>
+      {label && <label className={styles.label}>{label}</label>}
+      {register ? (
+        <input
+          {...register(label, { required })}
+          className={styles.textInputField}
+        />
+      ) : (
+        <input className={styles.textInputField} />
+      )}
     </div>
   );
 };
-
-export default TextInput;
