@@ -1,24 +1,26 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext } from "react";
+import { useModal } from "lib/hooks/useModal";
+import { Modal } from "styleComponents";
+import { Portal } from "utils/Portal";
 
-export const ModalContext = createContext();
+interface IModalContext {
+  modal: boolean;
+  handleModal: (content?: JSX.Element) => void;
+  modalContent: JSX.Element | undefined;
+}
 
-export const useModal = () => {
-  return useContext(ModalContext);
-};
+const ModalContext = createContext<IModalContext>();
 
-export const ModalContextProvider = ({
-  closeModal,
-  children,
-}: {
-  closeModal: () => void;
-  children: JSX.Element;
-}) => {
-  const context = useMemo(() => {
-    return {
-      closeModal,
-    };
-  }, [closeModal]);
+const ModalProvider = ({ children }: { children: JSX.Element }) => {
+  let { modal, handleModal, modalContent } = useModal();
   return (
-    <ModalContext.Provider value={context}>{children}</ModalContext.Provider>
+    <ModalContext.Provider value={{ modal, handleModal, modalContent }}>
+      <Portal>
+        <Modal />
+      </Portal>
+      {children}
+    </ModalContext.Provider>
   );
 };
+
+export { ModalContext, ModalProvider };

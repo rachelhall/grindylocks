@@ -1,30 +1,21 @@
-import React from "react";
-import { ModalContextProvider } from "lib/context/ModalContext";
-import { CloseModalButton } from "styleComponents/CloseModalButton";
+import React, { useContext } from "react";
+import { ModalContext } from "lib/context/ModalContext";
+import { CloseModalButton, Text } from "styleComponents";
 
 import styles from "./Modal.module.scss";
 
-interface IProps {
-  isOpen: boolean;
-  children: JSX.Element;
-}
-
-export const Modal: React.FC<IProps> = (props) => {
-  const { children, isOpen } = props;
-
-  const closeModal = () => {};
-
-  if (!isOpen) {
-    return null;
-  }
-  return (
-    <ModalContextProvider closeModal={closeModal}>
+export const Modal: React.FC = () => {
+  const { modalContent, handleModal, modal } = useContext(ModalContext);
+  if (modal) {
+    return (
       <div className={styles.Modal}>
-        <CloseModalButton handleClose={() => {}} />
-        <div className={styles.modalContent}>{children}</div>
+        <div className={styles.modalInner}>
+          <CloseModalButton handleClose={handleModal} />
+          <div className={styles.modalContent}>{modalContent}</div>
+        </div>
       </div>
-    </ModalContextProvider>
-  );
+    );
+  } else return null;
 };
 
 export default Modal;

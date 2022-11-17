@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FormEvent, FormEventHandler, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IPark } from "lib/types/park";
 import { Button, TextInput } from "styleComponents";
@@ -13,6 +13,8 @@ interface IProps {
 export const AddParkForm: React.FC<IProps> = (props) => {
   const { onSubmit } = props;
 
+  const [imageSrc, setImageSrc] = useState();
+
   const {
     register,
     handleSubmit,
@@ -22,7 +24,7 @@ export const AddParkForm: React.FC<IProps> = (props) => {
 
   return (
     <div className={styles.AddParkForm}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <TextInput
           label="name"
           required={false}
@@ -72,6 +74,7 @@ export const AddParkForm: React.FC<IProps> = (props) => {
           register={register}
         />
         <FileInput label="media" register={register} required={false} />
+
         <Button type="submit">Submit</Button>
       </form>
     </div>

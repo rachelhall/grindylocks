@@ -8,5 +8,5 @@ export interface IPark {
   postal_code: number;
   country: string;
   description: string;
-  media: string;
+  media: File[];
 }

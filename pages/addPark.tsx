@@ -27,17 +27,17 @@ export const AddPark: React.FC<IProps> = (props) => {
     | "media";
 
   const addPark = async (data: IPark) => {
-    const mediaFormData = new FormData();
+    const formData = new FormData();
 
-    for (const mediaItem of data.media) {
-      console.log(data.media);
-      mediaFormData.append("media_item", mediaItem);
+    for (const key in data) {
+      formData.append(key, data[key]);
     }
-    console.log(mediaFormData);
-    const response = await axios.post("api/uploadMedia", mediaFormData);
-    console.log(response);
 
-    // axios.post("api/addPark", formData).then((res) => console.log(res));
+    axios
+      .post("api/addPark", formData, {
+        headers: { "content-type": "multipart-formData" },
+      })
+      .then((res) => console.log(res));
   };
 
   return (
