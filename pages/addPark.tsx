@@ -35,7 +35,7 @@ export const AddPark: React.FC<IProps> = (props) => {
 
     axios
       .post("api/addPark", formData, {
-        headers: { "content-type": "multipart-formData" },
+        headers: { "content-type": "multipart/form-data" },
       })
       .then((res) => console.log(res));
   };

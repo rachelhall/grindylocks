@@ -1,6 +1,10 @@
 import React from "react";
 import { Path, UseFormRegister } from "react-hook-form";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { IPark } from "lib/types/park";
+import { Button } from "styleComponents/Button";
+
+import CloudinaryUploadWidget from "components/CloudinaryUploadWidget";
 
 import styles from "./FileInput.module.scss";
 
@@ -15,7 +19,8 @@ export const FileInput: React.FC<IProps> = (props) => {
 
   return (
     <div className={styles.FileInput}>
-      <input {...register(label, { required })} type="file" />
+      <CloudinaryUploadWidget />
+      {/* <input {...register(label, { required })} type="file" /> */}
     </div>
   );
 };

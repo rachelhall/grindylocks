@@ -2,7 +2,8 @@ import React, { FormEvent, FormEventHandler, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IPark } from "lib/types/park";
 import { Button, TextInput } from "styleComponents";
-import FileInput from "styleComponents/FileInput";
+
+import CloudinaryUploadWidget from "components/CloudinaryUploadWidget";
 
 import styles from "./AddParkForm.module.scss";
 
@@ -15,6 +16,8 @@ export const AddParkForm: React.FC<IProps> = (props) => {
 
   const [imageSrc, setImageSrc] = useState();
 
+  const [publicId, setPublicId] = useState<string[]>([]);
+
   const {
     register,
     handleSubmit,
@@ -24,7 +27,7 @@ export const AddParkForm: React.FC<IProps> = (props) => {
 
   return (
     <div className={styles.AddParkForm}>
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           label="name"
           required={false}
@@ -73,7 +76,7 @@ export const AddParkForm: React.FC<IProps> = (props) => {
           type="text"
           register={register}
         />
-        <FileInput label="media" register={register} required={false} />
+        <CloudinaryUploadWidget publicId={publicId} setPublicId={setPublicId} />
 
         <Button type="submit">Submit</Button>
       </form>
