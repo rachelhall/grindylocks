@@ -1,7 +1,11 @@
+import clsx from "clsx";
+
+import utilStyles from "../../styles/utils.module.css";
 import styles from "./Text.module.scss";
 
 interface IProps {
   children?: JSX.Element | string;
+  className?: string;
   color?: "dark" | "light" | "accent";
   fontSize?: "small" | "medium" | "large" | "huge";
   fontWeight?: "light" | "regular" | "bold";
@@ -12,6 +16,7 @@ interface IProps {
 
 export const Text: React.FC<IProps> = ({
   children,
+  className,
   color = "light",
   fontSize = "medium",
   fontWeight = "regular",
@@ -19,17 +24,18 @@ export const Text: React.FC<IProps> = ({
   textAlign,
   verticalSpacing,
 }) => {
+  const mainClass = clsx(className, [styles.text]);
   return (
     <p
-      className={styles.text}
+      className={mainClass}
       style={{
         fontSize:
           fontSize === "small"
             ? "1rem"
             : fontSize === "medium"
-            ? "1.75rem"
-            : fontSize === "large"
             ? "1.5rem"
+            : fontSize === "large"
+            ? "1.75rem"
             : fontSize === "huge"
             ? "2.5rem"
             : "unset",

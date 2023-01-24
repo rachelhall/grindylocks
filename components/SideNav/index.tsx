@@ -1,15 +1,20 @@
 import React, { useContext } from "react";
+import { AiOutlineHome, AiOutlineSearch } from "react-icons/ai";
+import { BsFillTreeFill } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { IoIosCreate } from "react-icons/io";
 import { ModalContext } from "lib/context/ModalContext";
 import fetchJson from "lib/fetchJson";
 import useUser from "lib/hooks/useUser";
 import { useRouter } from "next/router";
 import NavButton from "styleComponents/NavButton";
 
-import AddParkForm from "components/AddParkForm";
 import NewPostForm from "components/NewPostForm";
+import ToggleAuthButton from "components/ToggleAuthButton";
 
 import { Text } from "../../styleComponents";
 
+import utilStyles from "../../styles/utils.module.css";
 import styles from "./SideNav.module.scss";
 
 interface IProps {}
@@ -37,19 +42,82 @@ export const SideNav: React.FC<IProps> = (props) => {
   };
   return (
     <div className={styles.SideNav}>
-      <Text>Grindylocks</Text>
+      <Text className={utilStyles.hideMobile}>Grindylocks</Text>
       <nav>
-        <NavButton onClick={handleNavigate} route="posts" title="Home" />
-        <NavButton onClick={handleNavigate} route="search" title="Search" />
-        <NavButton onClick={handleCreate} title="Create" />
-        <NavButton onClick={handleNavigate} route="addPark" title="Add Park" />
-        <NavButton onClick={handleNavigate} route="account" title="Profile" />
+        <NavButton
+          icon={
+            <AiOutlineHome
+              style={{
+                height: "1.5rem",
+                width: "1.5rem",
+                color: "var(--light)",
+              }}
+            />
+          }
+          onClick={handleNavigate}
+          route="posts"
+          title="Home"
+        />
+        <NavButton
+          icon={
+            <AiOutlineSearch
+              style={{
+                height: "1.5rem",
+                width: "1.5rem",
+                color: "var(--light)",
+              }}
+            />
+          }
+          onClick={handleNavigate}
+          route="search"
+          title="Search"
+        />
+        <NavButton
+          icon={
+            <IoIosCreate
+              style={{
+                height: "1.5rem",
+                width: "1.5rem",
+                color: "var(--light)",
+              }}
+            />
+          }
+          onClick={handleCreate}
+          title="Create"
+        />
+        <NavButton
+          icon={
+            <BsFillTreeFill
+              style={{
+                height: "1.5rem",
+                width: "1.5rem",
+                color: "var(--light)",
+              }}
+            />
+          }
+          onClick={handleNavigate}
+          route="parks"
+          title="Parks"
+        />
+        <NavButton
+          icon={
+            <CgProfile
+              style={{
+                height: "1.5rem",
+                width: "1.5rem",
+                color: "var(--light)",
+              }}
+            />
+          }
+          onClick={handleNavigate}
+          route="account"
+          title="Profile"
+        />
       </nav>
-      <a href={"/api/logout"} onClick={handleLogout}>
-        <div className={styles.logout}>
-          <Text>Logout</Text>
-        </div>
-      </a>
+
+      <div className={styles.logout}>
+        <ToggleAuthButton />
+      </div>
     </div>
   );
 };

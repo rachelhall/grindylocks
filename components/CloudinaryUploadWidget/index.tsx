@@ -1,5 +1,6 @@
 import React from "react";
 import { UploadApiOptions } from "cloudinary";
+import { IMediaItem } from "lib/types/mediaItem";
 import Script from "next/script";
 import { Button } from "styleComponents";
 import { openUploadWidget } from "utils/CloudinaryService";
@@ -7,12 +8,11 @@ import { openUploadWidget } from "utils/CloudinaryService";
 import styles from "./CloudinaryUploadWidget.module.scss";
 
 interface IProps {
-  publicId: string[];
-  setPublicId: (id: string[]) => void;
+  setCloudinaryResponse: (data: any) => void;
 }
 
 export const CloudinaryUploadWidget: React.FC<IProps> = (props) => {
-  const { setPublicId } = props;
+  const { setCloudinaryResponse } = props;
 
   const cloudOptions = {
     cloudName: "dyspjkmgs",
@@ -21,14 +21,14 @@ export const CloudinaryUploadWidget: React.FC<IProps> = (props) => {
 
   const onMediaUpload = (error, result) => {
     try {
-      const files = result.info.files;
+      const files: IMediaItem[] = result.info.files;
+
       if (files) {
-        files.forEach((file) => setPublicId(file.uploadInfo.public_id));
+        files.forEach((file) => setCloudinaryResponse(file.uploadInfo));
       }
     } catch (error) {
       console.warn(error);
     }
-    console.log("the media upload callback has run", error, result);
   };
 
   const uploadWidget = () => {

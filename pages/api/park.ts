@@ -4,16 +4,17 @@ import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function park(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.body;
-  const parksUrl = id
-    ? `${process.env.API_URL}/park/parks${id}`
-    : `${process.env.API_URL}/park/parks`;
+  const { id } = req.query;
+
+  const parksUrl = `${process.env.API_URL}/park/parks/`;
 
   try {
-    const response = await axios.get(parksUrl);
-    if (response.data.length === 1) {
+    console.log({ id });
+    if (id) {
+      const response = await axios.get(`${parksUrl}?id=${id}`);
       res.status(200).json(response.data[0]);
     } else {
+      const response = await axios.get(parksUrl);
       res.status(200).json(response.data);
     }
   } catch (error) {

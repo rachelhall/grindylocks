@@ -1,4 +1,4 @@
-import React, { FormEvent, FormEventHandler, useState } from "react";
+import React, { FormEvent, FormEventHandler, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IPark } from "lib/types/park";
 import { Button, TextInput } from "styleComponents";
@@ -15,8 +15,6 @@ export const AddParkForm: React.FC<IProps> = (props) => {
   const { onSubmit } = props;
 
   const [imageSrc, setImageSrc] = useState();
-
-  const [publicId, setPublicId] = useState<string[]>([]);
 
   const {
     register,
@@ -76,7 +74,7 @@ export const AddParkForm: React.FC<IProps> = (props) => {
           type="text"
           register={register}
         />
-        <CloudinaryUploadWidget publicId={publicId} setPublicId={setPublicId} />
+        <CloudinaryUploadWidget />
 
         <Button type="submit">Submit</Button>
       </form>

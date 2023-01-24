@@ -2,13 +2,12 @@
 }
 
 .postGrid {
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 300px 300px 300px;
-  grid-gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
 }
 
 .gridContainer {
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
 }

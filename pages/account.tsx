@@ -5,8 +5,8 @@ import { IPost } from "lib/types/post";
 import { IUser } from "lib/types/user";
 import { NextPage } from "next";
 
+import AccountGridItem from "components/AccountGridItem";
 import { AccountInfoCard } from "components/AccountInfoCard";
-import Post from "components/Post";
 
 import styles from "../styles/pages/Account.module.scss";
 
@@ -44,7 +44,6 @@ const Account: NextPage = () => {
   if (!account) {
     return (
       <div>
-        {/* <Header /> */}
         <p>Loading...</p>
       </div>
     );
@@ -52,16 +51,13 @@ const Account: NextPage = () => {
 
   return (
     <div className={styles.account}>
-      {/* <Header /> */}
       <AccountInfoCard account={account} />
-      <div className={styles.gridContainer}>
-        <div className={styles.postGrid}>
-          {posts.map((post) => (
-            <div key={post.id}>
-              <Post post={post} />
-            </div>
-          ))}
-        </div>
+      <div className={styles.postGrid}>
+        {posts.map((post) => (
+          <div key={post.id}>
+            <AccountGridItem post={post} />
+          </div>
+        ))}
       </div>
     </div>
   );

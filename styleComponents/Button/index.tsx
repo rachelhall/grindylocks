@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import Link from "next/link";
 
 import styles from "./Button.module.scss";
@@ -6,7 +7,7 @@ import styles from "./Button.module.scss";
 interface IProps extends React.HTMLProps<HTMLButtonElement> {
   ariaLabel?: string;
   className?: string;
-  color?: "primary" | "secondary" | "black" | "transparent";
+  color?: "primary" | "secondary";
   currentTabLinkTo?: string;
   inline?: boolean;
   isLoading?: boolean;
@@ -48,12 +49,14 @@ export const Button: React.FC<IProps> = (props) => {
     return <Link href={linkTo}>{children}</Link>;
   }
 
+  const mainClass = clsx(styles.button, {
+    [styles.textButton]: textButton,
+    [styles.primary]: color === "primary",
+    [styles.secondary]: color === "secondary",
+  });
+
   return (
-    <button
-      className={textButton ? styles.textButton : styles.button}
-      onClick={handleOnClick}
-      type={type}
-    >
+    <button className={mainClass} onClick={handleOnClick} type={type}>
       {children}
     </button>
   );

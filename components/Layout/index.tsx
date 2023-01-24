@@ -1,7 +1,5 @@
 import React from "react";
 import { ModalProvider } from "lib/context/ModalContext";
-import { Modal } from "styleComponents";
-import { Portal } from "utils/Portal";
 
 import SideNav from "components/SideNav";
 

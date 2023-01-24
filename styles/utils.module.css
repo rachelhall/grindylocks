@@ -1,0 +1,24 @@
+.flex {
+  display: flex;
+}
+
+.marginHorizontalMd {
+  margin: 0 1rem;
+}
+
+.marginHorizontalSm {
+  margin: 0 0.5rem;
+}
+.primaryIcon {
+  color: var(--light);
+}
+
+.marginRightMd {
+  margin-right: 1rem;
+}
+
+@media (max-width: 1260px) {
+  .hideMobile {
+    display: none;
+  }
+}

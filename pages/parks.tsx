@@ -1,26 +1,44 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useQuery } from "@apollo/client";
+import { gql } from "apollo-server-micro";
 import { IPark } from "lib/types/park";
 import { NextPage } from "next";
 
+import { Text } from "../styleComponents";
+
 const Parks: NextPage = () => {
-  const [parks, setParks] = useState<IPark[]>();
+  const AllParksQuery = gql`
+    query allParksQuery($first: Int, $after: String) {
+      parks(first: $first, after: $after) {
+        edges {
+          node {
+            id
+            name
+            description
+          }
+        }
+      }
+    }
+  `;
 
-  useEffect(() => {
-    axios("api/parks").then((res) => setParks(res.data));
-  });
+  const { data, loading, error, fetchMore } = useQuery(AllParksQuery);
 
-  if (!parks) {
-    return <p>Loading...</p>;
-  }
+  const parks = data?.parks.edges;
+
+  useEffect(() => console.log({ parks }), [parks]);
+
+  if (loading) return <p>Loading...</p>;
+
+  if (error) return <p>Oh no... {error.message}</p>;
+
   return (
     <div>
       <p>Parks</p>
-      {/* {parks?.map((park) => (
-        <div key={park.id}>
-          <p>{park.name}</p>
+      {data.parks.edges?.map((park, index) => (
+        <div key={index}>
+          <Text>{park.node.name}</Text>
         </div>
-      ))} */}
+      ))}
     </div>
   );
 };

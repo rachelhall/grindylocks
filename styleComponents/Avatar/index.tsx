@@ -14,6 +14,7 @@ export const Avatar: React.FC<IProps> = ({ className, name, src }) => {
         src={src ?? ""}
         height="100"
         width="100"
+        objectFit="cover"
       />
     </div>
   );

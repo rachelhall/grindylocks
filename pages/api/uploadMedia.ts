@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 async function mediaUpload(req: NextApiRequest, res: NextApiResponse) {
   try {
     const response = await cloudinary.uploader.upload(req.body.file);
-    console.log(response);
+
     res.status(200).json(response.data);
   } catch (error) {
     res.status(500).send({

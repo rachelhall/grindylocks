@@ -1,15 +1,15 @@
 // /middleware.ts
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 import { getIronSession } from "iron-session/edge";
-import { sessionOptions } from "utils/withSession";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+// import { sessionOptions } from "utils/withSession";
 
 export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
-  const session = await getIronSession(req, res, sessionOptions);
+  // const session = await getIronSession(req, res, sessionOptions);
 
   // do anything with session here:
-  const { user } = session;
+  // const { user } = session;
 
   // like mutate user:
   // user.something = someOtherThing;
@@ -21,13 +21,11 @@ export const middleware = async (req: NextRequest) => {
   // or maybe you want to destroy session:
   // await session.destroy();
 
-  console.log("from middleware", { user });
-
   // demo:
-  if (user?.admin !== true) {
-    // unauthorized to see pages inside admin/
-    return NextResponse.redirect(new URL("/unauthorized", req.url)); // redirect to /unauthorized page
-  }
+  // if (user?.admin !== true) {
+  //   // unauthorized to see pages inside admin/
+  //   return NextResponse.redirect(new URL("/unauthorized", req.url)); // redirect to /unauthorized page
+  // }
 
   return res;
 };
