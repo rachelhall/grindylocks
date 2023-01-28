@@ -2,34 +2,36 @@
 ### Do not make changes to this file directly
 
 
-type Edge {
+type Mutation {
+  createPark(address_number: Int!, city: String!, country: String, description: String!, lat: Int!, lon: Int!, name: String!, post_code: Int, region: String, region_code: String, street: String!): Park!
+  createPost(description: String!, parkId: String, title: String!): Post!
+}
+
+type Park {
+  address_number: Int
+  city: String
+  country: String
+  description: String
+  id: ID
+  lat: Int
+  lon: Int
+  name: String
+  post_code: Int
+  posts: [Post]
+  region: String
+  region_code: String
+  street: String
+  surface: String
+}
+
+type ParkEdge {
   cursor: String
   node: Park
 }
 
-type Link {
-  category: String
-  description: String
-  id: String
-  imageUrl: String
-  title: String
-  url: String
-  users: [User]
-}
-
-type Mutation {
-  createPost(description: String!, park: String, title: String!): Post!
-}
-
-type PageInfo {
+type ParkPageInfo {
   endCursor: String
   hasNextPage: Boolean
-}
-
-type Park {
-  description: String
-  id: ID
-  name: String
 }
 
 type Post {
@@ -37,9 +39,23 @@ type Post {
   comment: String
   description: String
   id: String
-  park: String
   title: String
   user: String
+}
+
+type PostEdge {
+  cursor: String
+  node: Post
+}
+
+type PostPageInfo {
+  endCursor: String
+  hasNextPage: Boolean
+}
+
+type PostResponse {
+  edges: [PostEdge]
+  pageInfo: PostPageInfo
 }
 
 type Query {
@@ -48,8 +64,8 @@ type Query {
 }
 
 type Response {
-  PageInfo: PageInfo
-  edges: [Edge]
+  ParkPageInfo: ParkPageInfo
+  edges: [ParkEdge]
 }
 
 enum Role {
@@ -58,7 +74,6 @@ enum Role {
 }
 
 type User {
-  bookmarks: [Link]
   email: String
   id: String
   image: String

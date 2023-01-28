@@ -9,6 +9,8 @@ import {
   stringArg,
 } from "nexus";
 
+import { Park } from "./Park";
+
 export const Post = objectType({
   name: "Post",
   definition(t) {
@@ -18,7 +20,16 @@ export const Post = objectType({
     t.string("title");
     t.string("description");
     t.string("comment");
-    t.string("park");
+    // t.field("park", {
+    //   type: Park,
+    //   resolve(root, args, ctx) {
+    //     return ctx.prisma.post.findUnique({
+    //       where: {
+    //         id: root.id,
+    //       },
+    //     });
+    //   },
+    // });
   },
 });
 
@@ -86,8 +97,8 @@ export const PostsQuery = extendType({
   },
 });
 
-export const Edge = objectType({
-  name: "Edge",
+export const PostEdge = objectType({
+  name: "PostEdge",
   definition(t) {
     t.string("cursor");
     t.field("node", {
@@ -96,20 +107,20 @@ export const Edge = objectType({
   },
 });
 
-export const PageInfo = objectType({
-  name: "PageInfo",
+export const PostPageInfo = objectType({
+  name: "PostPageInfo",
   definition(t) {
     t.string("endCursor");
     t.boolean("hasNextPage");
   },
 });
 
-export const Response = objectType({
-  name: "Response",
+export const PostResponse = objectType({
+  name: "PostResponse",
   definition(t) {
-    t.field("pageInfo", { type: PageInfo });
+    t.field("pageInfo", { type: PostPageInfo });
     t.list.field("edges", {
-      type: Edge,
+      type: PostEdge,
     });
   },
 });
@@ -122,7 +133,7 @@ export const CreatePostMutation = extendType({
       args: {
         title: nonNull(stringArg()),
         description: nonNull(stringArg()),
-        park: nullable(stringArg()),
+        parkId: nullable(stringArg()),
         // media:
       },
       async resolve(_parent, args, ctx) {
@@ -139,7 +150,7 @@ export const CreatePostMutation = extendType({
         const newPost = {
           title: args.title,
           description: args.description,
-          park: args.park,
+          parkId: args.parkId,
         };
 
         return await ctx.prisma.post.create({

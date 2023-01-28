@@ -49,11 +49,11 @@ export const NewPostForm: React.FC<IProps> = (props) => {
   const { data, fetchMore } = useQuery(AllParksQuery);
 
   const CreatePostMutation = gql`
-    mutation ($title: String!, $description: String!, $park: String!) {
-      createPost(title: $title, description: $description, park: $park) {
+    mutation ($title: String!, $description: String!, $parkId: String!) {
+      createPost(title: $title, description: $description, parkId: $parkId) {
         title
         description
-        park
+        parkId
       }
     }
   `;
@@ -68,7 +68,7 @@ export const NewPostForm: React.FC<IProps> = (props) => {
     const variables = {
       title,
       description,
-      park: park,
+      parkId: park,
     };
 
     try {

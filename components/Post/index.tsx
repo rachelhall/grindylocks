@@ -18,46 +18,27 @@ interface IProps {
 export const Post: React.FC<IProps> = (props) => {
   const { post } = props;
 
-  const [account, setAccount] = useState<IAccount>();
-  const [park, setPark] = useState<IPark>();
-
-  const getAccount = async () => {
-    const { data } = await axios.get(
-      `${window.location.origin}/api/account?user=${post.user}`
-    );
-    setAccount(data);
-  };
-
-  const getPark = async () => {
-    const { data } = await axios.get(
-      `${window.location.origin}/api/park?id=${post.park}`
-    );
-    console.log({ data });
-    setPark(data);
-  };
-
-  useEffect(() => {
-    getAccount();
-    getPark();
-  }, []);
+  console.log({ post });
 
   return (
     <Card>
       <div className={styles.Post}>
         <div className={styles.postHeader}>
           <Text color="dark" fontSize="small" fontWeight="bold">
-            {account?.name}
+            {/* {account?.name} */} ...
           </Text>
           <Text color="dark" fontSize="small">
-            {park?.name}
+            {/* {park?.name} */}
+            Claremont
           </Text>
         </div>
         <PostMedia alt={post.description} media={post.media} />
         <div className={styles.postDetails}>
           <Text color="dark" fontSize="small">
             <>
-              <span style={{ fontWeight: 900 }}>{account?.name}</span>
-              {post.title} {post.description}
+              Username{" "}
+              {/* <span style={{ fontWeight: 900 }}>{account?.name}</span> */}
+              {post.node.etitle} {post.node.description}
             </>
           </Text>
 
@@ -68,7 +49,7 @@ export const Post: React.FC<IProps> = (props) => {
             <Text color="dark" fontSize="small">
               <>
                 <span style={{ fontWeight: 900 }}>Meeshisk8es</span>
-                wow! look at that big air grindylocks!
+                Sample comment ya!
               </>
             </Text>
           </Text>

@@ -17,7 +17,6 @@ model User {
   email     String?  @unique
   image     String?
   role      Role     @default(USER)
-  bookmarks Link[]
 }
 
 enum Role {
@@ -30,25 +29,22 @@ enum Surface {
   WOOD
 }
 
-model Link {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String
-  description String
-  url         String
-  imageUrl    String
-  category    String
-  users       User[]
-}
-
 model Park {
-  id          String  @id @unique @default(uuid())
-  name        String
-  description String
-  surface     Surface @default(CONCRETE)
+  id             String  @id @unique @default(uuid())
+  name           String
+  description    String
+  surface        Surface @default(CONCRETE)
+  lat            Int?
+  lon            Int?
+  address_number Int?
+  street         String?
+  post_code      Int?
+  city           String?
+  region         String?
+  region_code    String?
+  country        String?
 
-  Post Post[]
+  posts Post[]
 }
 
 model Post {

@@ -9,5 +9,8 @@ export const resolvers = {
     posts: (_parent, _args, ctx) => {
       return ctx.prisma.post.findMany();
     },
+    parks: (_parent, _args, ctx) => {
+      return ctx.prisma.park.findMany();
+    },
   },
 };

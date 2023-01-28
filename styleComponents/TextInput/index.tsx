@@ -7,7 +7,9 @@ import TextFieldButton from "styleComponents/TextFieldButton";
 import styles from "./TextInput.module.scss";
 
 interface IProps {
+  autoComplete?: "address-line1";
   className?: string;
+  id?: string;
   label: Path<any>;
   required: boolean;
   type?: HTMLInputTypeAttribute;
@@ -21,6 +23,8 @@ interface IProps {
 }
 
 export const TextInput: React.FC<IProps> = ({
+  autoComplete,
+  id,
   label,
   register,
   required,
@@ -35,15 +39,19 @@ export const TextInput: React.FC<IProps> = ({
       <div className={styles.textInputField}>
         {register ? (
           <input
+            autoComplete={autoComplete}
+            className={styles.input}
+            id={id}
             type={type}
             {...register(label, { required })}
-            className={styles.input}
           />
         ) : (
           <input
-            type={type}
-            placeholder={placeholder}
+            autoComplete={autoComplete}
             className={styles.input}
+            id={id}
+            placeholder={placeholder}
+            type={type}
           />
         )}
         {submitButton && (

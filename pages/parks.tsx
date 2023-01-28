@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { gql } from "apollo-server-micro";
-import { IPark } from "lib/types/park";
 import { NextPage } from "next";
 
 import { Text } from "../styleComponents";

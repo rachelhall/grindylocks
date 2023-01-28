@@ -1,13 +1,16 @@
 import React from "react";
-import axios from "axios";
 
-import AddParkForm from "components/AddParkForm";
+const AddParkForm = dynamic(() => import("../components/AddParkForm"), {
+  ssr: false,
+});
 
 import { Text } from "../styleComponents";
 
 import styles from "../styles/pages/AddPark.module.scss";
 
 interface IProps {}
+
+import dynamic from "next/dynamic";
 
 import { IPark } from "../lib/types/park";
 
@@ -26,24 +29,10 @@ export const AddPark: React.FC<IProps> = (props) => {
     | "description"
     | "media";
 
-  const addPark = async (data: IPark) => {
-    const formData = new FormData();
-
-    for (const key in data) {
-      formData.append(key, data[key]);
-    }
-
-    axios
-      .post("api/addPark", formData, {
-        headers: { "content-type": "multipart/form-data" },
-      })
-      .then((res) => console.log(res));
-  };
-
   return (
     <div className={styles.AddPark}>
       <Text>Upload new park</Text>
-      <AddParkForm onSubmit={addPark} />
+      <AddParkForm />
     </div>
   );
 };
