@@ -1,18 +1,13 @@
-// /graphql/types/User.ts
-import { enumType, objectType } from "nexus";
+import { builder } from "../builder";
 
-export const User = objectType({
-  name: "User",
-  definition(t) {
-    t.string("id");
-    t.string("name");
-    t.string("email");
-    t.string("image");
-    t.field("role", { type: Role });
-  },
+builder.prismaObject("User", {
+  fields: (t) => ({
+    id: t.exposeID("id"),
+    email: t.exposeString("email", { nullable: true }),
+    role: t.expose("role", { type: Role }),
+  }),
 });
 
-const Role = enumType({
-  name: "Role",
-  members: ["USER", "ADMIN"],
+const Role = builder.enumType("Role", {
+  values: ["USER", "ADMIN"] as const,
 });

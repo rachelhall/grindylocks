@@ -7,8 +7,6 @@ import Layout from "components/Layout";
 
 import apolloClient from "../lib/apollo";
 
-import User from "./api/user";
-
 import "../styles/globals.css";
 
 const App = ({ Component, pageProps }: AppProps) => {

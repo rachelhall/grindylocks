@@ -5,7 +5,6 @@ import { CgProfile } from "react-icons/cg";
 import { IoIosCreate } from "react-icons/io";
 import { ModalContext } from "lib/context/ModalContext";
 import fetchJson from "lib/fetchJson";
-import useUser from "lib/hooks/useUser";
 import { useRouter } from "next/router";
 import NavButton from "styleComponents/NavButton";
 
@@ -22,14 +21,7 @@ interface IProps {}
 export const SideNav: React.FC<IProps> = (props) => {
   const {} = props;
 
-  const { mutateUser } = useUser();
   const router = useRouter();
-
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
-    router.push("/login");
-  };
 
   const handleNavigate = (route?: string) => {
     router.push(`/${route}`);

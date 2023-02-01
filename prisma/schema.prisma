@@ -3,6 +3,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./client"
+}
+
+generator pothos {
+  provider     = "prisma-pothos-types"
+  clientOutput = "./client"
+  output       = "./generated.d.ts"
 }
 
 datasource db {
@@ -10,13 +17,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Account {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   email     String?  @unique
-  image     String?
-  role      Role     @default(USER)
+  name      String?
+  pronouns  String?
+  bio       String?
+  avatar    String?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model User {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String    @unique
+  role      Role      @default(USER)
+  Account   Account[]
 }
 
 enum Role {
@@ -31,8 +51,8 @@ enum Surface {
 
 model Park {
   id             String  @id @unique @default(uuid())
-  name           String
-  description    String
+  name           String?
+  description    String?
   surface        Surface @default(CONCRETE)
   lat            Int?
   lon            Int?
@@ -51,8 +71,8 @@ model Post {
   id          String   @id @unique @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  title       String
-  description String
-  park        Park?    @relation(fields: [parkId], references: [id])
-  parkId      String?
+  title       String?
+  description String?
+  park        Park     @relation(fields: [parkId], references: [id])
+  parkId      String
 }

@@ -1,162 +1,53 @@
-import {
-  booleanArg,
-  extendType,
-  idArg,
-  intArg,
-  nonNull,
-  nullable,
-  objectType,
-  stringArg,
-} from "nexus";
+import { builder } from "graphql/builder";
+import prisma from "lib/prisma/prisma";
 
-import { Park } from "./Park";
+builder.prismaObject("Post", {
+  fields: (t) => ({
+    id: t.exposeID("id"),
 
-export const Post = objectType({
-  name: "Post",
-  definition(t) {
-    t.string("id");
-    t.string("user");
-    t.string("account");
-    t.string("title");
-    t.string("description");
-    t.string("comment");
-    // t.field("park", {
-    //   type: Park,
-    //   resolve(root, args, ctx) {
-    //     return ctx.prisma.post.findUnique({
-    //       where: {
-    //         id: root.id,
-    //       },
-    //     });
-    //   },
-    // });
-  },
+    // createdAt: t.expose('createdAt', { type: 'DateTime' }),
+    // updatedAt: t.expose('updatedAt', { type: 'DateTime' }),
+    title: t.exposeString("post"),
+    description: t.exposeString("description"),
+    park: t.relation("park"),
+  }),
 });
 
-export const PostsQuery = extendType({
-  type: "Query",
-  definition(t) {
-    t.field("posts", {
-      type: "Response",
-      args: {
-        first: intArg(),
-        after: stringArg(),
-      },
-      async resolve(_, args, ctx) {
-        let queryResults = null;
+builder.queryField("posts", (t) =>
+  t.prismaConnection({
+    type: "Post",
+    cursor: "id",
+    resolve: (query, _parent, _args, _ctx, _info) =>
+      prisma.post.findMany({ ...query }),
+  })
+);
 
-        if (args.after) {
-          queryResults = await ctx.prisma.post.findMany({
-            take: args.first!!,
-            skip: 1,
-            cursor: {
-              id: args.after,
-            },
-          });
-        } else {
-          queryResults = await ctx.prisma.post.findMany({
-            take: args.first!!,
-          });
-        }
-        if (queryResults.length > 0) {
-          const lastPostInResults = queryResults[queryResults.length - 1];
-          const myCursor = lastPostInResults.id;
+const CreatePostInput = builder.inputType("CreatePostInput", {
+  fields: (t) => ({
+    title: t.string({ required: true }),
+    description: t.string({ required: true }),
+    parkId: t.id({ required: true }),
+  }),
+});
 
-          const secondQueryResults = await ctx.prisma.post.findMany({
-            take: args.first!!,
-            cursor: {
-              id: myCursor,
+builder.mutationField("createPost", (t) =>
+  t.prismaField({
+    type: "Post",
+    args: {
+      input: t.arg({ type: CreatePostInput, required: true }),
+    },
+    resolve: (query, _, { input }) =>
+      prisma.post.create({
+        ...query,
+        data: {
+          title: input.title,
+          description: input.description,
+          park: {
+            connect: {
+              id: input.parkId.toString(),
             },
-            // orderBy: {
-            //   index: "asc",
-            // },
-          });
-
-          const result = {
-            pageInfo: {
-              endCursor: myCursor,
-              hasNextPage:
-                args.first && secondQueryResults.length >= args.first,
-            },
-            edges: queryResults.map((post) => ({
-              cursor: post.id,
-              node: post,
-            })),
-          };
-          return result;
-        }
-        return {
-          pageInfo: {
-            endCursor: null,
-            hasNextPage: false,
           },
-          edges: [],
-        };
-      },
-    });
-  },
-});
-
-export const PostEdge = objectType({
-  name: "PostEdge",
-  definition(t) {
-    t.string("cursor");
-    t.field("node", {
-      type: Post,
-    });
-  },
-});
-
-export const PostPageInfo = objectType({
-  name: "PostPageInfo",
-  definition(t) {
-    t.string("endCursor");
-    t.boolean("hasNextPage");
-  },
-});
-
-export const PostResponse = objectType({
-  name: "PostResponse",
-  definition(t) {
-    t.field("pageInfo", { type: PostPageInfo });
-    t.list.field("edges", {
-      type: PostEdge,
-    });
-  },
-});
-
-export const CreatePostMutation = extendType({
-  type: "Mutation",
-  definition(t) {
-    t.nonNull.field("createPost", {
-      type: Post,
-      args: {
-        title: nonNull(stringArg()),
-        description: nonNull(stringArg()),
-        parkId: nullable(stringArg()),
-        // media:
-      },
-      async resolve(_parent, args, ctx) {
-        if (!ctx.user) {
-          throw new Error(`You need to be logged in to perform an action.`);
-        }
-
-        const user = await ctx.prisma.user.findUnique({
-          where: {
-            email: ctx.user?.email,
-          },
-        });
-
-        const newPost = {
-          title: args.title,
-          description: args.description,
-          parkId: args.parkId,
-        };
-
-        return await ctx.prisma.post.create({
-          data: newPost,
-        });
-      },
-    });
-  },
-});
+        },
+      }),
+  })
+);

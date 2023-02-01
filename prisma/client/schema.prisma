@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+generator pothos {
+  provider     = "prisma-pothos-types"
+  clientOutput = "./client"
+  output       = "./generated.d.ts"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String?  @unique
+  name      String?
+  pronouns  String?
+  bio       String?
+  avatar    String?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model User {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String    @unique
+  role      Role      @default(USER)
+  Account   Account[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Surface {
+  CONCRETE
+  WOOD
+}
+
+model Park {
+  id             String  @id @unique @default(uuid())
+  name           String?
+  description    String?
+  surface        Surface @default(CONCRETE)
+  lat            Int?
+  lon            Int?
+  address_number Int?
+  street         String?
+  post_code      Int?
+  city           String?
+  region         String?
+  region_code    String?
+  country        String?
+
+  posts Post[]
+}
+
+model Post {
+  id          String   @id @unique @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String?
+  description String?
+  park        Park     @relation(fields: [parkId], references: [id])
+  parkId      String
+}
